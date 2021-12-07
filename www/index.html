@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Ionic App</title>
+
+    <!-- CSS y JS de Ionic -->
+    <script type="module" src="https://unpkg.com/@ionic/core@next/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://unpkg.com/@ionic/core@next/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@ionic/core@latest/css/ionic.bundle.css"/>
+  </head>
+  
+  <body>
+    <ion-app>
+      <!-- rutas de la aplicación -->
+      <ion-router>
+        <ion-route url="/" component="pagina-envios"></ion-route>
+        <ion-route url="/registro" component="pagina-registro"></ion-route>
+        <ion-route url="/login" component="pagina-login"></ion-route>
+        <ion-route url="/nuevo-envio" component="pagina-nuevo-envio"></ion-route>
+        <ion-route url="/detalle-envio?id" component="pagina-detalle-envio"></ion-route>
+      </ion-router> 
+      <ion-nav></ion-nav>
+      
+      <!-- Menu lateral -->
+      <ion-menu side="start" content-id="main">
+        <ion-header>
+          <ion-toolbar color="dark">
+            <ion-title>Menu</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-list>
+            <ion-list-header lines="inset">
+              <ion-label>Envios</ion-label>
+            </ion-list-header>
+            <ion-item onclick="cerrarMenu()" href="/">Listado</ion-item>
+            <ion-item onclick="cerrarMenu()" href="nuevo-envio">Nuevo</ion-item>
+            <ion-list-header lines="inset">
+              <ion-label>Usuario</ion-label>
+            </ion-list-header>
+            <ion-item onclick="cerrarMenu()" href="login">Login</ion-item>
+            <ion-item onclick="cerrarMenu()" href="registro">Registrarse</ion-item>
+            <ion-item>Salir</ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-menu>
+      <div id="main"></div>
+
+      <!-- Pagina de Ingreso -->
+      <pagina-login class="pagina ion-page">
+        <ion-header>
+          <ion-toolbar color="dark">
+              <ion-title>Ingresar</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-item>
+            <ion-label position="floating">Usuario</ion-label>
+            <ion-input id="usuarioLogin"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input id="passwordLogin" type="password"></ion-input>
+          </ion-item>
+          <ion-button color="dark" style="margin: 30px 20px;" expand="block" onclick="login()">Ingresar</ion-button>
+          <ion-label color="dark" style="margin: 0px 20px;">Aun no tienes cuenta? <a href="#/registro">Regístrate.</a></ion-label>
+          <ion-label color="danger" style="margin: 20px;" id="mensajeErrorIngreso"></ion-label>
+        </ion-content>
+      </pagina-login>  
+
+      <!-- Pagina de Registro -->
+      <pagina-registro class="pagina ion-page">
+        <ion-header>
+          <ion-toolbar color="dark">
+              <ion-title>Registro</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content">
+          <ion-item>
+            <ion-label position="floating">Usuario</ion-label>
+            <ion-input id="usuarioRegistro"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input id="passwordRegistro" type="password"></ion-input>
+          </ion-item>
+          <ion-button color="dark" style="margin: 30px 20px;" expand="block" onclick="registro()">Crear usuario</ion-button>
+          <ion-label color="dark" style="margin: 0px 20px;">Ya tienes cuenta? <a href="#/login">Inicia sesión.</a></ion-label>
+          <ion-label color="danger" style="margin: 20px;" id="mensajeErrorRegistro"></ion-label>
+        </ion-content>
+      </pagina-registro>  
+
+      <!-- Pagina de Envios -->
+      <pagina-envios class="pagina ion-page">
+        <ion-header>
+          <ion-toolbar color="dark">
+              <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+              </ion-buttons>
+              <ion-title>Envios</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content">
+          <ion-list id="listaEnvios">
+          </ion-list>
+        </ion-content>
+      </pagina-envios>  
+
+      <!-- Pagina de Nuevo Envio -->
+      <pagina-nuevo-envio class="pagina ion-page">
+        <ion-header>
+          <ion-toolbar color="dark">
+            <ion-buttons slot="start">
+              <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title>Nuevo Envio</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-item>
+            <ion-label position="floating">Distancia</ion-label>
+            <ion-input id="distancia" type="number"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Peso</ion-label>
+            <ion-input id="peso" type="number"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Precio</ion-label>
+            <ion-input id="precio" type="number"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Departamento</ion-label>
+            <ion-select placeholder="Seleccionar uno" id="selectDepartamentos">
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Origen</ion-label>
+            <ion-select placeholder="Seleccionar ciudad" id="selectCiudadesOrigen">
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Destino</ion-label>
+            <ion-select placeholder="Seleccionar ciudad" id="selectCiudadesDestino">
+            </ion-select>
+          </ion-item>
+          <ion-button onclick="sacarFoto()" expand="block" style="margin: 30px 20px 0px;">
+            <ion-icon slot="start" name="camera"></ion-icon>
+            Sacar foto
+          </ion-button>
+          
+          <img id="foto" style="margin: 10px auto; max-height: 100px ;display: flex;">
+          
+          <ion-button color="dark" style="margin: 0px 20px;" expand="block" onclick="crearEnvio()">Crear Envio</ion-button>
+          <ion-label color="danger" style="margin: 20px;" id="mensajeErrorEnvio"></ion-label>
+        </ion-content>
+      </pagina-nuevo-envio>
+
+      <!-- Pagina de Detalle de Envio -->
+      <pagina-detalle-envio class="pagina ion-page">
+      </pagina-detalle-envio>
+    </ion-app>
+
+    <!-- Capacitor -->
+    <script src="capacitor.js"></script>
+    <!-- Js de la app -->
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>

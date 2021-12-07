@@ -1,0 +1,6 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "capacitacion-ionic-capacitor",
+  "webDir": "www",
+  "bundledWebRuntime": true
+}
