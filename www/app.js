@@ -6,7 +6,7 @@ let paginaNuevoEnvio = document.querySelector("pagina-nuevo-envio");
 let paginaDetalleEnvio = document.querySelector("pagina-detalle-envio");
 let paginaLogin = document.querySelector("pagina-login");
 let paginaRegistro = document.querySelector("pagina-registro");
-
+let paginaFuncionalidades = document.querySelector("pagina-funcionalidades");
 
 const chequeoUsuarioLogueado = () => {
     const isLoggedIn = hayUsuarioLogueado();
@@ -66,6 +66,10 @@ router.addEventListener("ionRouteDidChange", (e) => {
     if (detail.to.includes("/detalle-envio")) {
         paginaDetalleEnvio.style.display = "block";
         cargarDetalleEnvio();
+    }
+
+    if (detail.to === "/funcionalidades") {
+        paginaFuncionalidades.style.display = "block";
     }
 });
 
@@ -310,12 +314,29 @@ function cargarSelectDepartamentos(departamentos) {
 window.sacarFoto = async () => {
     // estamos en android o en web?
     if (Capacitor.isNativePlatform()) {
-        const photo = await Capacitor.Plugins.Camera.getPhoto({
+        let photo = await Capacitor.Plugins.Camera.getPhoto({
             quality: 90,
+            // allowEditing: true,
             resultType: "uri"
         });
     
         document.getElementById("foto").src = photo.webPath;
+    } else {
+        alert('Esto solo funciona en entorno nativo');
+    }
+};
+
+window.geoloc = async () => {
+    // estamos en android o en web?
+    if (Capacitor.isNativePlatform()) {
+        let resultado = await Capacitor.Plugins.Geolocation.getCurrentPosition({ timeout: 3000 });
+
+        document.getElementById("coordenadas").innerHTML = 
+        `
+            <ion-item><b>Latitude:</b> ${resultado.coords.latitude}</ion-item>
+            <ion-item><b>Altitude:</b> ${resultado.coords.altitude}</ion-item>  
+            <ion-item><b>Longitude:</b> ${resultado.coords.longitude}</ion-item>  
+        `;
     } else {
         alert('Esto solo funciona en entorno nativo');
     }

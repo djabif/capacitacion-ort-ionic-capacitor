@@ -22,6 +22,7 @@
         <ion-route url="/login" component="pagina-login"></ion-route>
         <ion-route url="/nuevo-envio" component="pagina-nuevo-envio"></ion-route>
         <ion-route url="/detalle-envio?id" component="pagina-detalle-envio"></ion-route>
+        <ion-route url="/funcionalidades" component="pagina-funcionalidades"></ion-route>
       </ion-router> 
       <ion-nav></ion-nav>
       
@@ -29,7 +30,7 @@
       <ion-menu side="start" content-id="main">
         <ion-header>
           <ion-toolbar color="dark">
-            <ion-title>Menu</ion-title>
+            <ion-title>Capacitor App</ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content>
@@ -39,6 +40,7 @@
             </ion-list-header>
             <ion-item onclick="cerrarMenu()" href="/">Listado</ion-item>
             <ion-item onclick="cerrarMenu()" href="nuevo-envio">Nuevo</ion-item>
+            <ion-item onclick="cerrarMenu()" href="funcionalidades">Funcionalidades</ion-item>
             <ion-list-header lines="inset">
               <ion-label>Usuario</ion-label>
             </ion-list-header>
@@ -148,12 +150,6 @@
             <ion-select placeholder="Seleccionar ciudad" id="selectCiudadesDestino">
             </ion-select>
           </ion-item>
-          <ion-button onclick="sacarFoto()" expand="block" style="margin: 30px 20px 0px;">
-            <ion-icon slot="start" name="camera"></ion-icon>
-            Sacar foto
-          </ion-button>
-          
-          <img id="foto" style="margin: 10px auto; max-height: 100px ;display: flex;">
           
           <ion-button color="dark" style="margin: 0px 20px;" expand="block" onclick="crearEnvio()">Crear Envio</ion-button>
           <ion-label color="danger" style="margin: 20px;" id="mensajeErrorEnvio"></ion-label>
@@ -163,6 +159,31 @@
       <!-- Pagina de Detalle de Envio -->
       <pagina-detalle-envio class="pagina ion-page">
       </pagina-detalle-envio>
+
+      <!-- Pagina de Funcionalidades -->
+      <pagina-funcionalidades class="pagina ion-page">
+        <ion-header>
+          <ion-toolbar color="dark">
+            <ion-buttons slot="start">
+              <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title>Funcionaliades Nativas</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-button onclick="sacarFoto()" expand="block" style="margin: 30px 20px 0px;">
+            <ion-icon slot="start" name="camera"></ion-icon>
+            Sacar foto
+          </ion-button>
+          <img id="foto" style="margin: 10px auto; max-height: 100px ;display: flex;">
+
+          <ion-button onclick="geoloc()" expand="block" style="margin: 30px 20px 0px;">
+            <ion-icon slot="start" name="location-outline"></ion-icon>
+            Geolocalizacion
+          </ion-button>
+          <div id="coordenadas"></div>
+        </ion-content>
+      </pagina-funcionalidades>
     </ion-app>
 
     <!-- Capacitor -->

@@ -26,22 +26,30 @@ Ejecutarla usando el live server de VS Code. Editar el `settings.json` con:
 
 <img src="https://drive.google.com/uc?id=1rgGJBUnotXfHwk2BX6qLeUhBKCrh7VDC" alt="initial app structure" width="400"/>
 
-## Capacitor
-- Ejecutar `$ ionic integrations enable capacitor --add`
-- Agregar plataforma android: `$ ionic capacitor add android`
-    - Crea `/android`. Es el proyecto nativo de android.
-- Cada vez que hacemos un cambio y queremos sincronizarlo a la app de android: `$ npx cap sync`
-- Correrlo en el emulador o dispositivo enchufado: `$ npx cap run android`
-
 ## Ionic
 - [Componentes Visuales](https://ionicframework.com/docs/components)
 
 ## Capacitor
-- [Getting Started](https://capacitorjs.com/docs/getting-started)
+Native runtime for building Web Native apps.
 
+- Ejecutar `$ ionic integrations enable capacitor --add`
+- Agregar plataforma android: `$ ionic capacitor add android`
+    - Crea `/android`. Es el proyecto nativo de android.
 - [Config para que Capacitor funcione en vanilla js](https://capacitorjs.com/docs/web#using-capacitor-as-a-script-include)
-
-- Camara plugin: `$ npm install @capacitor/camera --save`
-    - [Documentación](https://capacitorjs.com/docs/apis/camera)
-
+- [Documentación](https://capacitorjs.com/docs/getting-started)
 - [Capacitor JS Utilities](https://capacitorjs.com/docs/basics/utilities)
+
+### Workflow de desarrollo
+- Cada vez que hacemos un cambio y queremos sincronizarlo a la app de android: `$ npx cap sync`
+- Para correrlo en el emulador o dispositivo conectado: `$ npx cap run android`
+
+### Capacitor Plugins 
+Es lo que usamos para acceder a las capacidades del dispositivo.
+
+
+- Camara plugin: `$ npm install @capacitor/camera `
+    - [Ver config](https://capacitorjs.com/docs/apis/camera)
+
+- Geolocation plugin: `$ npm install @capacitor/geolocation`
+    - [Ver config](https://capacitorjs.com/docs/apis/geolocation) 
+
