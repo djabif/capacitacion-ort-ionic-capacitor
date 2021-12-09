@@ -11,11 +11,11 @@ https://capacitacion-ionic.web.app
 
 
 ## Estructura inicial
-
-- `$ ionic init`: crea el json de config de ionic
-- `$ git init` para inicializarlo como repo git
 - Crear un `package.json` básico.
     - Se puede crear usando el wizard con `$ npm init`
+- `$ ionic init`: crea el json de config de ionic
+- `$ git init` para inicializarlo como repo git
+
 
 ## Ejecutar la app local
 Ejecutarla usando el live server de VS Code. Editar el `settings.json` con:

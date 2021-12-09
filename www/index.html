@@ -17,7 +17,7 @@
     <ion-app>
       <!-- rutas de la aplicación -->
       <ion-router>
-        <ion-route url="/" component="pagina-envios"></ion-route>
+        <ion-route url="/" component="pagina-envios" id="rutaEnvios"></ion-route>
         <ion-route url="/registro" component="pagina-registro"></ion-route>
         <ion-route url="/login" component="pagina-login"></ion-route>
         <ion-route url="/nuevo-envio" component="pagina-nuevo-envio"></ion-route>
@@ -51,6 +51,22 @@
         </ion-content>
       </ion-menu>
       <div id="main"></div>
+
+      <!-- Pagina de Envios -->
+      <pagina-envios class="pagina ion-page">
+        <ion-header>
+          <ion-toolbar color="dark">
+              <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+              </ion-buttons>
+              <ion-title>Envios</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content">
+          <ion-list id="listaEnvios">
+          </ion-list>
+        </ion-content>
+      </pagina-envios> 
 
       <!-- Pagina de Ingreso -->
       <pagina-login class="pagina ion-page">
@@ -95,22 +111,6 @@
           <ion-label color="danger" style="margin: 20px;" id="mensajeErrorRegistro"></ion-label>
         </ion-content>
       </pagina-registro>  
-
-      <!-- Pagina de Envios -->
-      <pagina-envios class="pagina ion-page">
-        <ion-header>
-          <ion-toolbar color="dark">
-              <ion-buttons slot="start">
-                <ion-menu-button></ion-menu-button>
-              </ion-buttons>
-              <ion-title>Envios</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content">
-          <ion-list id="listaEnvios">
-          </ion-list>
-        </ion-content>
-      </pagina-envios>  
 
       <!-- Pagina de Nuevo Envio -->
       <pagina-nuevo-envio class="pagina ion-page">

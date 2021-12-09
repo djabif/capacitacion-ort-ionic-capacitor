@@ -1,6 +1,7 @@
 let menu = document.querySelector('ion-menu');
 let router = document.querySelector("ion-router");
 
+// páginas
 let paginaEnvios = document.querySelector("pagina-envios");
 let paginaNuevoEnvio = document.querySelector("pagina-nuevo-envio");
 let paginaDetalleEnvio = document.querySelector("pagina-detalle-envio");
@@ -8,32 +9,27 @@ let paginaLogin = document.querySelector("pagina-login");
 let paginaRegistro = document.querySelector("pagina-registro");
 let paginaFuncionalidades = document.querySelector("pagina-funcionalidades");
 
-const chequeoUsuarioLogueado = () => {
-    const isLoggedIn = hayUsuarioLogueado();
-  
-    if (isLoggedIn) {
+// antes de que el usuario pueda entrar a la home asegurarnos que esté logueado
+document.getElementById('rutaEnvios').beforeEnter = () => {
+    if (hayUsuarioLogueado()) {
       return true;
     } else {
       return { redirect: '/login' }; // Si no hay usuario logueado, lo mandamos a la página de login
     }
-  }
-
-// antes de que el usuario pueda entrar a la home asegurarnos que esta logueado
-document.querySelector('ion-route[url="/"]').beforeEnter = chequeoUsuarioLogueado;
-
-
+}
 
 function hayUsuarioLogueado() {
     let key = localStorage.getItem('apiKey');
-    if (key != null ) {
+    if (key != null) {
         return true;
     } else {
         return false;
     }
 }
 
+// cada vez que cambia la ruta de navegación muestro u oculto cosas
 router.addEventListener("ionRouteDidChange", (e) => {
-    let { detail } = e;
+    let navegacion = e.detail;
 
     // ocultar todas las páginas
     let paginas = document.getElementsByClassName('pagina');
@@ -41,37 +37,43 @@ router.addEventListener("ionRouteDidChange", (e) => {
         paginas[i].style.display = "none";
     }
 
-    if (detail.to === "/login") {
+    if (navegacion.to === "/login") {
         paginaLogin.style.display = "block";
         document.getElementById('mensajeErrorIngreso').style.display = "none";
     }
 
-    if (detail.to === "/registro") {
+    if (navegacion.to === "/registro") {
         paginaRegistro.style.display = "block";
         document.getElementById('mensajeErrorRegistro').style.display = "none";
     }
 
-    if (detail.to === "/") {
+    if (navegacion.to === "/") {
         paginaEnvios.style.display = "block";
         getEnviosDelUsuarioLogueado();
     }
 
-    if (detail.to === "/nuevo-envio") {
+    if (navegacion.to === "/nuevo-envio") {
         paginaNuevoEnvio.style.display = "block";
         getDepartamentos();
         getCiudades();
     }
     
     //detalle envio
-    if (detail.to.includes("/detalle-envio")) {
+    if (navegacion.to.includes("/detalle-envio")) {
         paginaDetalleEnvio.style.display = "block";
         cargarDetalleEnvio();
     }
 
-    if (detail.to === "/funcionalidades") {
+    if (navegacion.to === "/funcionalidades") {
         paginaFuncionalidades.style.display = "block";
     }
 });
+
+window.cerrarMenu = function() {
+    menu.close();
+};
+
+// -------------------  Pagina Ingreso / Login -------------------  
 
 window.login = function() {
     let usuario = document.getElementById('usuarioLogin').value;
@@ -104,6 +106,8 @@ window.login = function() {
     });
 }
 
+// -------------------  Pagina Registro -------------------  
+
 window.registro = function() {
     let usuario = document.getElementById('usuarioRegistro').value;
     let password = document.getElementById('passwordRegistro').value;
@@ -129,30 +133,13 @@ window.registro = function() {
             document.getElementById('mensajeErrorRegistro').innerHTML = data.mensaje;
             document.getElementById('mensajeErrorRegistro').style.display = "block";
         }
-        
     })
     .catch(function(error) {
         console.log(error);
     });
 }
 
-window.cerrarMenu = function() {
-    menu.close();
-};
-
-function cargarEnvios(envios) {
-    document.getElementById('listaEnvios').innerHTML = "";
-    // cargar data
-    for (let i = 0; i < envios.length; i++) {
-        document.getElementById('listaEnvios').innerHTML +=
-        `
-        <ion-item button href="/detalle-envio?id=${envios[i].id}">
-            ${envios[i].id}
-        </ion-item>
-        `
-    }
-} 
-
+// -------------------  Pagina Envios (Home) -------------------  
 function getEnviosDelUsuarioLogueado() {
     fetch('https://envios.develotion.com/envios.php?idUsuario=' + localStorage.getItem('id'), {
         method: "GET",
@@ -162,15 +149,35 @@ function getEnviosDelUsuarioLogueado() {
       })
     .then(response => response.json())
     .then(function(data) {
-        cargarEnvios(data.envios);
+        if (data.codigo === 200) {
+            cargarListaEnvios(data.envios);
+        } else if (data.codigo === 401) {
+            alert(data.mensaje + ". Por favor ingresa nuevamente.");
+        }
     })
     .catch(function(error) {
         console.log(error);
     });
 }
 
+function cargarListaEnvios(envios) {
+    document.getElementById('listaEnvios').innerHTML = "";
+    // cargar data
+    for (let i = 0; i < envios.length; i++) {
+        document.getElementById('listaEnvios').innerHTML +=
+        `
+        <ion-item button href="/detalle-envio?id=${envios[i].id}">
+            ${envios[i].id}
+        </ion-item>
+        `;
+    }
+} 
+
+
+// -------------------  Pagina Detalle Envio -------------------  
 
 function cargarDetalleEnvio() {
+    // obtengo el id del envio de la url
     let paramString = window.location.href.split('?')[1];
     let idEnvio = paramString.split('=')[1];
 
@@ -189,6 +196,32 @@ function cargarDetalleEnvio() {
     </ion-content>
   `;
 } 
+
+window.eliminarEnvio = function(idEnvio) {
+    fetch('https://envios.develotion.com/envios.php', {
+        method: "DELETE",
+        headers: {
+            "apikey": localStorage.getItem('apiKey')
+        },
+        body: JSON.stringify({
+            "idEnvio": idEnvio,
+        })
+      })
+    .then(response => response.json())
+    .then(function(data) {
+        if (data.codigo === 200) {
+             // navegar a la pagina de envios
+            router.push('/');
+        } else {
+            //error
+        }
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+};
+
+// -------------------  Pagina Nuevo Envio -------------------  
 
 
 window.crearEnvio = function() {
@@ -216,30 +249,6 @@ window.crearEnvio = function() {
             //error
             document.getElementById('mensajeErrorEnvio').innerHTML = data.mensaje;
             document.getElementById('mensajeErrorEnvio').style.display = "block";
-        }
-    })
-    .catch(function(error) {
-        console.log(error);
-    });
-};
-
-window.eliminarEnvio = function(idEnvio) {
-    fetch('https://envios.develotion.com/envios.php', {
-        method: "DELETE",
-        headers: {
-            "apikey": localStorage.getItem('apiKey')
-        },
-        body: JSON.stringify({
-            "idEnvio": idEnvio,
-        })
-      })
-    .then(response => response.json())
-    .then(function(data) {
-        if (data.codigo === 200) {
-             // navegar a la pagina de envios
-            router.push('/');
-        } else {
-            //error
         }
     })
     .catch(function(error) {
@@ -285,6 +294,7 @@ function getCiudades(idDepartamento = null) {
     });
 }
 
+// si cambia el departmento seleccionado entonces cargo las ciudades correspondientes en los selects
 document.getElementById('selectDepartamentos').addEventListener("ionChange", (e) => {
     let departamentoSeleccionado = document.getElementById('selectDepartamentos').value;
     if (departamentoSeleccionado != null) {
@@ -311,6 +321,7 @@ function cargarSelectDepartamentos(departamentos) {
     }
 }
 
+// -------------------  Pagina Funcionalidades -------------------  
 window.sacarFoto = async () => {
     // estamos en android o en web?
     if (Capacitor.isNativePlatform()) {
