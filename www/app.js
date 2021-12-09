@@ -75,7 +75,10 @@ window.cerrarMenu = function() {
 
 // -------------------  Pagina Ingreso / Login -------------------  
 
-window.login = function() {
+
+document.getElementById('btnIngresar').addEventListener('click', login);
+
+function login() {
     let usuario = document.getElementById('usuarioLogin').value;
     let password = document.getElementById('passwordLogin').value;
 
@@ -86,7 +89,7 @@ window.login = function() {
             "password": password
         })
       })
-    .then(response => response.json())
+    .then(respuesta => respuesta.json())
     .then(function(data) {
         if (data.codigo === 200) {
             // guardar el apiKey en localStorage
@@ -107,8 +110,9 @@ window.login = function() {
 }
 
 // -------------------  Pagina Registro -------------------  
+document.getElementById('btnRegistro').addEventListener('click', registro);
 
-window.registro = function() {
+function registro() {
     let usuario = document.getElementById('usuarioRegistro').value;
     let password = document.getElementById('passwordRegistro').value;
 
@@ -119,7 +123,7 @@ window.registro = function() {
             "password": password
         })
       })
-    .then(response => response.json())
+    .then(respuesta => respuesta.json())
     .then(function(data) {
         if (data.codigo === 200) {
             // guardar el apiKey en localStorage
@@ -147,7 +151,7 @@ function getEnviosDelUsuarioLogueado() {
           "apikey": localStorage.getItem('apiKey')
         }
       })
-    .then(response => response.json())
+    .then(respuesta => respuesta.json())
     .then(function(data) {
         if (data.codigo === 200) {
             cargarListaEnvios(data.envios);
@@ -207,7 +211,7 @@ window.eliminarEnvio = function(idEnvio) {
             "idEnvio": idEnvio,
         })
       })
-    .then(response => response.json())
+    .then(respuesta => respuesta.json())
     .then(function(data) {
         if (data.codigo === 200) {
              // navegar a la pagina de envios
@@ -223,8 +227,9 @@ window.eliminarEnvio = function(idEnvio) {
 
 // -------------------  Pagina Nuevo Envio -------------------  
 
+document.getElementById('btnCrearEnvio').addEventListener('click', crearEnvio);
 
-window.crearEnvio = function() {
+function crearEnvio() {
     fetch('https://envios.develotion.com/envios.php', {
         method: "POST",
         headers: {
@@ -240,7 +245,7 @@ window.crearEnvio = function() {
             "idCategoria": 5
         })
       })
-    .then(response => response.json())
+    .then(respuesta => respuesta.json())
     .then(function(data) {
         if (data.codigo === 200) {
              // navegar a la pagina de envios
@@ -263,7 +268,7 @@ function getDepartamentos() {
           "apikey": localStorage.getItem('apiKey')
         }
       })
-    .then(response => response.json())
+    .then(respuesta => respuesta.json())
     .then(function(data) {
         cargarSelectDepartamentos(data.departamentos);
     })
@@ -285,7 +290,7 @@ function getCiudades(idDepartamento = null) {
           "apikey": localStorage.getItem('apiKey')
         }
       })
-    .then(response => response.json())
+    .then(respuesta => respuesta.json())
     .then(function(data) {
         cargarSelectsCiudades(data.ciudades);
     })
@@ -295,12 +300,14 @@ function getCiudades(idDepartamento = null) {
 }
 
 // si cambia el departmento seleccionado entonces cargo las ciudades correspondientes en los selects
-document.getElementById('selectDepartamentos').addEventListener("ionChange", (e) => {
+document.getElementById('selectDepartamentos').addEventListener("ionChange", cambiarDeptoSeleccionado);
+
+function cambiarDeptoSeleccionado() {
     let departamentoSeleccionado = document.getElementById('selectDepartamentos').value;
     if (departamentoSeleccionado != null) {
         getCiudades(departamentoSeleccionado);
     }
-})
+}
 
 function cargarSelectsCiudades(ciudades) {
     document.getElementById('selectCiudadesOrigen').innerHTML = "";
@@ -322,7 +329,9 @@ function cargarSelectDepartamentos(departamentos) {
 }
 
 // -------------------  Pagina Funcionalidades -------------------  
-window.sacarFoto = async () => {
+document.getElementById('btnSacarFoto').addEventListener('click', sacarFoto);
+
+async function sacarFoto() {
     // estamos en android o en web?
     if (Capacitor.isNativePlatform()) {
         let photo = await Capacitor.Plugins.Camera.getPhoto({
@@ -337,7 +346,9 @@ window.sacarFoto = async () => {
     }
 };
 
-window.geoloc = async () => {
+document.getElementById('btnGeolocalizacion').addEventListener('click', obtenerGeolocalizacion);
+
+async function obtenerGeolocalizacion() {
     // estamos en android o en web?
     if (Capacitor.isNativePlatform()) {
         let resultado = await Capacitor.Plugins.Geolocation.getCurrentPosition({ timeout: 3000 });

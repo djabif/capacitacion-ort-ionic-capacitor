@@ -84,7 +84,7 @@
             <ion-label position="floating">Password</ion-label>
             <ion-input id="passwordLogin" type="password"></ion-input>
           </ion-item>
-          <ion-button color="dark" style="margin: 30px 20px;" expand="block" onclick="login()">Ingresar</ion-button>
+          <ion-button color="dark" style="margin: 30px 20px;" expand="block" id="btnIngresar">Ingresar</ion-button>
           <ion-label color="dark" style="margin: 0px 20px;">Aun no tienes cuenta? <a href="#/registro">Regístrate.</a></ion-label>
           <ion-label color="danger" style="margin: 20px;" id="mensajeErrorIngreso"></ion-label>
         </ion-content>
@@ -106,7 +106,7 @@
             <ion-label position="floating">Password</ion-label>
             <ion-input id="passwordRegistro" type="password"></ion-input>
           </ion-item>
-          <ion-button color="dark" style="margin: 30px 20px;" expand="block" onclick="registro()">Crear usuario</ion-button>
+          <ion-button color="dark" style="margin: 30px 20px;" expand="block" id="btnRegistro">>Crear usuario</ion-button>
           <ion-label color="dark" style="margin: 0px 20px;">Ya tienes cuenta? <a href="#/login">Inicia sesión.</a></ion-label>
           <ion-label color="danger" style="margin: 20px;" id="mensajeErrorRegistro"></ion-label>
         </ion-content>
@@ -151,7 +151,7 @@
             </ion-select>
           </ion-item>
           
-          <ion-button color="dark" style="margin: 0px 20px;" expand="block" onclick="crearEnvio()">Crear Envio</ion-button>
+          <ion-button color="dark" style="margin: 0px 20px;" expand="block" id="btnCrearEnvio">Crear Envio</ion-button>
           <ion-label color="danger" style="margin: 20px;" id="mensajeErrorEnvio"></ion-label>
         </ion-content>
       </pagina-nuevo-envio>
@@ -171,13 +171,13 @@
           </ion-toolbar>
         </ion-header>
         <ion-content>
-          <ion-button onclick="sacarFoto()" expand="block" style="margin: 30px 20px 0px;">
+          <ion-button id="btnSacarFoto" expand="block" style="margin: 30px 20px 0px;">
             <ion-icon slot="start" name="camera"></ion-icon>
             Sacar foto
           </ion-button>
           <img id="foto" style="margin: 10px auto; max-height: 100px ;display: flex;">
 
-          <ion-button onclick="geoloc()" expand="block" style="margin: 30px 20px 0px;">
+          <ion-button id="btnGeolocalizacion" expand="block" style="margin: 30px 20px 0px;">
             <ion-icon slot="start" name="location-outline"></ion-icon>
             Geolocalizacion
           </ion-button>
