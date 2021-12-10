@@ -1,5 +1,6 @@
 let menu = document.querySelector('ion-menu');
 let router = document.querySelector("ion-router");
+let itemsMenu = document.getElementsByClassName("item-menu");
 
 // páginas
 let paginaEnvios = document.querySelector("pagina-envios");
@@ -25,6 +26,17 @@ function hayUsuarioLogueado() {
     } else {
         return false;
     }
+}
+
+
+// Asignar funcion cerrar menu a los items del menu
+for (let i = 0; i < itemsMenu.length; i++) {
+    const element = itemsMenu[i];
+    element.addEventListener("click", cerrarMenu);
+}
+
+function cerrarMenu() {
+    menu.close();
 }
 
 // cada vez que cambia la ruta de navegación muestro u oculto cosas
@@ -71,13 +83,7 @@ function cambioDeRuta(event) {
     }
 }
 
-window.cerrarMenu = function() {
-    menu.close();
-};
-
 // -------------------  Pagina Ingreso / Login -------------------  
-
-
 document.getElementById('btnIngresar').addEventListener('click', login);
 
 function login() {
