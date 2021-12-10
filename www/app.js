@@ -28,8 +28,10 @@ function hayUsuarioLogueado() {
 }
 
 // cada vez que cambia la ruta de navegación muestro u oculto cosas
-router.addEventListener("ionRouteDidChange", (e) => {
-    let navegacion = e.detail;
+router.addEventListener("ionRouteDidChange", cambioDeRuta);
+
+function cambioDeRuta(event) {
+    let navegacion = event.detail;
 
     // ocultar todas las páginas
     let paginas = document.getElementsByClassName('pagina');
@@ -67,7 +69,7 @@ router.addEventListener("ionRouteDidChange", (e) => {
     if (navegacion.to === "/funcionalidades") {
         paginaFuncionalidades.style.display = "block";
     }
-});
+}
 
 window.cerrarMenu = function() {
     menu.close();
@@ -277,6 +279,7 @@ function getDepartamentos() {
     });
 }
 
+// idDepartamento es un parametro opcional
 function getCiudades(idDepartamento = null) {
     let param = "";   
   

@@ -7,9 +7,11 @@
 
     <title>Ionic App</title>
 
-    <!-- CSS y JS de Ionic -->
+    <!-- Ionic lib -->
     <script type="module" src="https://unpkg.com/@ionic/core@next/dist/ionic/ionic.esm.js"></script>
+    <!-- Ionic lib fallback for older browsers -->
     <script nomodule src="https://unpkg.com/@ionic/core@next/dist/ionic/ionic.js"></script>
+     <!-- Ionic Styles-->
     <link rel="stylesheet" href="https://unpkg.com/@ionic/core@latest/css/ionic.bundle.css"/>
   </head>
   
@@ -106,7 +108,7 @@
             <ion-label position="floating">Password</ion-label>
             <ion-input id="passwordRegistro" type="password"></ion-input>
           </ion-item>
-          <ion-button color="dark" style="margin: 30px 20px;" expand="block" id="btnRegistro">>Crear usuario</ion-button>
+          <ion-button color="dark" style="margin: 30px 20px;" expand="block" id="btnRegistro">Crear usuario</ion-button>
           <ion-label color="dark" style="margin: 0px 20px;">Ya tienes cuenta? <a href="#/login">Inicia sesión.</a></ion-label>
           <ion-label color="danger" style="margin: 20px;" id="mensajeErrorRegistro"></ion-label>
         </ion-content>
