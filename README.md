@@ -52,4 +52,5 @@ Es lo que usamos para acceder a las capacidades del dispositivo.
 
 - Geolocation plugin: `$ npm install @capacitor/geolocation`
     - [Ver config](https://capacitorjs.com/docs/apis/geolocation) 
+    - [Setear location en el emulador](https://developer.android.com/studio/run/emulator). [Video de cómo hacerlo](https://drive.google.com/file/d/1iLB5zil862iz_wRLZ_WglZwZovaomhyN/view?usp=sharing)   
 
