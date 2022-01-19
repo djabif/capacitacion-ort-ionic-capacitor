@@ -337,7 +337,9 @@ function cargarSelectDepartamentos(departamentos) {
     }
 }
 
-// -------------------  Pagina Funcionalidades -------------------  
+// -------------------  Pagina Funcionalidades -------------------
+
+// Cámara
 document.getElementById('btnSacarFoto').addEventListener('click', sacarFoto);
 
 async function sacarFoto() {
@@ -355,6 +357,7 @@ async function sacarFoto() {
     }
 };
 
+// Geolocation
 document.getElementById('btnGeolocalizacion').addEventListener('click', obtenerGeolocalizacion);
 
 async function obtenerGeolocalizacion() {
@@ -372,3 +375,28 @@ async function obtenerGeolocalizacion() {
         alert('Esto solo funciona en entorno nativo');
     }
 };
+
+// QR Scanner
+// document.getElementById('btnQrScanner').addEventListener('click', escanearQR);
+
+// async function escanearQR() {
+
+//     // estamos en android o en web?
+//     if (Capacitor.isNativePlatform()) {
+//         console.log(Capacitor.Plugins.BarcodeScanner);
+//         Capacitor.Plugins.BarcodeScanner.hideBackground(); // make background of WebView transparent
+//         document.body.classList.add("qrscanner"); // add the qrscanner class to body
+//         const result = await Capacitor.Plugins.BarcodeScanner.startScan(); // start scanning and wait for a result
+
+//         // if the result has content
+//         if (result.hasContent) {
+//             debugger;
+//             document.body.classList.remove("qrscanner");
+//           console.log(result.content); // log the raw scanned content
+//         } else {
+//             debugger;
+//         }
+//     } else {
+//         alert('Esto solo funciona en entorno nativo');
+//     }
+// };

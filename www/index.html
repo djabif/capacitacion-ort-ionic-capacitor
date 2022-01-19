@@ -16,7 +16,7 @@
   </head>
   
   <body>
-    <ion-app>
+    <ion-app class="scanner-hide">
       <!-- rutas de la aplicación -->
       <ion-router>
         <ion-route url="/" component="pagina-envios" id="rutaEnvios"></ion-route>
@@ -177,16 +177,32 @@
             <ion-icon slot="start" name="camera"></ion-icon>
             Sacar foto
           </ion-button>
-          <img id="foto" style="margin: 10px auto; max-height: 100px ;display: flex;">
+          <img id="foto" style="margin: 10px auto; max-height: 100px; display: flex;">
 
           <ion-button id="btnGeolocalizacion" expand="block" style="margin: 30px 20px 0px;">
             <ion-icon slot="start" name="location-outline"></ion-icon>
             Geolocalizacion
           </ion-button>
           <div id="coordenadas"></div>
+
+          <!-- <ion-button id="btnQrScanner" expand="block" style="margin: 30px 20px 0px;">
+            <ion-icon slot="start" name="qr-code-outline"></ion-icon>
+            QR Scanner
+          </ion-button> -->
         </ion-content>
       </pagina-funcionalidades>
     </ion-app>
+    <div class="scanner-ui">
+      ...Scanner Interface
+      </div>
+      <style>
+        .scanner-ui { display: none; }
+        .scanner-hide { visibility: visible; }
+
+        body.qrscanner { background-color: transparent; }
+        body.qrscanner .scanner-ui { display: block; }
+        body.qrscanner .scanner-hide { visibility: hidden; }
+      </style>
 
     <!-- Capacitor -->
     <script src="capacitor.js"></script>
