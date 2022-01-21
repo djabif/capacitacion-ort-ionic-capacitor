@@ -197,7 +197,7 @@ function cargarDetalleEnvio() {
     <ion-header>
       <ion-toolbar color="dark">
         <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
+            <ion-back-button default-href="/"></ion-back-button>
         </ion-buttons>
         <ion-title>Detalle Envio ${idEnvio}</ion-title>
       </ion-toolbar>
